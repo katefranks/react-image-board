@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import ImageBoard from './ImageBoard';
+import ImageBoard from './components/ImageBoard';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(

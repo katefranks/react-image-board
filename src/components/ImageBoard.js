@@ -1,53 +1,20 @@
 import { Component } from 'react';
 import './ImageBoard.css';
+import ImageList from './ImageList';
+import ImageForm from './ImageForm';
 
-class ImageForm extends Component{
-  constructor(props) {
-    super(props);
-    this.state = {
-      imageUrl: '',
-      imageCaption: '',
-  }
 
-    this.handleInput = this.handleInput.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-  }
-  handleInput(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
 
-  handleSubmit(event){
-    event.preventDefault();
-    this.props.addImage({
-      imageUrl: this.state.imageUrl,
-      imageCaption: this.state.imageCaption,
-      id: 3
-    });
 
-    this.setState({ imageUrl: '', imageCaption: '' });
-  }
-
-  render(){
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <input onChange={this.handleInput} name="imageUrl" type="text"/>
-        <input onChange={this.handleInput} name="imageCaption" type="text"/>
-        <button type="submit">Add Image</button>
-      </form>
-    )
-  }
-}
-
-class ImageList extends Component{
-//   return(){
-//   const images = props.addImage.map(image => (
-//     <li key={image.id}>
-//       <img src="{images.imageUrl}" alt=""/>
-//       <p>{images.imageCaption}</p>
-//     </li>
-//   ));
-// }
-}
+// //   return(){
+// //   const images = props.addImage.map(image => (
+// //     <li key={image.id}>
+// //       <img src="{images.imageUrl}" alt=""/>
+// //       <p>{images.imageCaption}</p>
+// //     </li>
+// //   ));
+// // }
+//
 
 
 class ImageBoard extends Component{
@@ -61,7 +28,8 @@ class ImageBoard extends Component{
   constructor(props) {
       super(props);
       this.state = {
-        images: []
+        images: [],
+        counter: 4,
       }
       this.addImage = this.addImage.bind(this);
       }
@@ -77,6 +45,11 @@ class ImageBoard extends Component{
         id: 2,
         imageUrl: "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=678&q=80",
         imageCaption: 'Puppy with Big Ears',
+      },
+      {
+        id:3,
+        imageUrl: "https://images.unsplash.com/photo-1581467655410-0c2bf55d9d6c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=982&q=80",
+        imageCaption: 'Another Cute Puppy!'
       }
     ];
 
@@ -84,18 +57,20 @@ class ImageBoard extends Component{
     }
 
     addImage(image){
+      image.id = this.state.counter;
       const images = [ ...this.state.images ];
       images.push(image);
-      this.setState( { images });
+      this.setState((state) => ({ images, counter: state.counter + 1 }));
     }
 
     render() {
       return (
-        <div>
+        <div className= "image-container">
+          <h1>Cute Puppy Image Board</h1>
           <ImageForm addImage={this.addImage} />
           <ImageList images={this.state.images} />
         </div>
-      )
+      );
     }
     }
 
